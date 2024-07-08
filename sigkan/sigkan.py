@@ -32,6 +32,9 @@ class SigKAN(Layer):
         kan_out = self.dropout(kan_out)
         return kan_out * weights[:,tf.newaxis,:]
 
+    def compute_output_shape(self, input_shape):
+        return (*input_shape[:-2], iisignature.siglength(input_shape[-1], self.m))
+
 class SigDense(Layer):
     def __init__(self, unit, sig_level, dropout = 0., **kwargs):
         super().__init__(**kwargs)
